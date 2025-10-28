@@ -12,11 +12,23 @@ public class Main {
         BufferedImage originalImage = ImageIO.read(new File(SOURCE_FILE));
         BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
+        long startTime = System.currentTimeMillis();
+
+
+        int numberOfThreads = 2;
+        recolorMultiThreaded(originalImage,resultImage,numberOfThreads);
+
 //        recolorSingleThreaded(originalImage, resultImage);
+
+        long endTime = System.currentTimeMillis();
+
+        long duration = endTime - startTime;
+
 
         File outputFile = new File(DESTINATION_FILE);
         ImageIO.write(resultImage, "jpg", outputFile);
 
+        System.out.println("Duration with 2 threads = "+duration);
     }
     public static void recolorMultiThreaded(BufferedImage originalImage, BufferedImage resultImage, int numberOfThreads){
         List<Thread> threads = new ArrayList<>();
